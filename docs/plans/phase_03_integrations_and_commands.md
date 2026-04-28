@@ -3,6 +3,13 @@
 ## Objective
 Deliver real user value by wiring stock and crypto provider integrations into production CLI commands. This phase converts the internal API foundation into end-user workflows for quote retrieval and recent history views while preserving robust error handling and testability.
 
+## Phase Status
+- [x] Task 1 complete: Market service and provider adapters implemented
+- [x] Task 2 complete: Stock integration implemented
+- [x] Task 3 complete: Crypto integration implemented
+- [x] Task 4 complete: `quote` and `history` CLI commands implemented
+- [x] Task 5 complete: Error UX hardening implemented for expected failures
+
 ## Required Inputs (Read First)
 - `AGENTS.md`
 - `docs/plans/ROADMAP.md`
@@ -59,13 +66,14 @@ Out of scope:
 ## Documentation Requirements
 - Update `README.md` Usage and Examples sections with at least 2-3 realistic command samples.
 - Document any provider limitations or symbol mapping caveats in Known Limitations.
+- Add a "Note for Grader" in the Installation/Usage section of `README.md` explaining that API keys are required and will be provided in the Canvas submission comments (do not commit real keys).
 
 ## AI Agent Audit Checklist
 Before marking this phase as complete, an AI agent must verify the following:
-- [ ] Code changes align with `.agent_docs/` guidelines.
-- [ ] Tests have been written/updated and pass locally.
-- [ ] The `README.md` has been updated to reflect any new features, flags, or usage commands.
-- [ ] No secrets or sensitive information have been hardcoded.
+- [x] Code changes align with `.agent_docs/` guidelines.
+- [x] Tests have been written/updated and pass locally.
+- [x] The `README.md` has been updated to reflect any new features, flags, or usage commands.
+- [x] No secrets or sensitive information have been hardcoded.
 - [ ] The commit history reflects logical, incremental steps.
 - [ ] The CI/CD pipeline on the `main` branch is passing.
 

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import typer
 
+from src.cli.commands.market import history_command, quote_command
+
 app = typer.Typer(help="Stock & Crypto CLI Tracker")
 
 
@@ -17,6 +19,10 @@ def cli() -> None:
 def ping() -> None:
     """Basic health command used to verify CLI wiring."""
     typer.echo("pong")
+
+
+app.command(name="quote")(quote_command)
+app.command(name="history")(history_command)
 
 
 def run() -> None:

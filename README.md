@@ -37,8 +37,11 @@ Common variables:
 - `STOCK_API_KEY` (optional, used in provider phases)
 - `CRYPTO_API_KEY` (optional, used in provider phases)
 
+### Note for Grader
+If your environment uses API-key-backed provider variants, add keys through environment variables and do not commit them. Any required keys for evaluation can be shared through Canvas submission comments as instructed by the course.
+
 ## Usage & Examples
-Run the baseline command:
+Run the baseline health command:
 
 ```bash
 python -m src.cli.app ping
@@ -56,6 +59,24 @@ Show command help:
 python -m src.cli.app --help
 ```
 
+Fetch a stock quote:
+
+```bash
+python -m src.cli.app quote AAPL --market stock
+```
+
+Fetch crypto quote:
+
+```bash
+python -m src.cli.app quote BTC --market crypto
+```
+
+Fetch recent price history:
+
+```bash
+python -m src.cli.app history ETH --market crypto --range 7d --interval 1d --limit 5
+```
+
 ## Project Structure
 ```text
 .
@@ -64,15 +85,23 @@ python -m src.cli.app --help
 ├── docs/plans/
 ├── src/
 │   ├── cli/
-│   │   └── app.py
+│   │   ├── app.py
+│   │   └── commands/
+│   │       └── market.py
 │   ├── core/
-│   │   └── api_client.py
+│   │   ├── api_client.py
+│   │   ├── market_service.py
+│   │   └── models.py
 │   └── utils/
 │       ├── config.py
 │       └── formatting.py
 ├── tests/
 │   ├── core/
+│   │   ├── test_api_client.py
+│   │   └── test_market_service.py
 │   ├── utils/
+│   │   ├── test_config.py
+│   │   └── test_formatting.py
 │   └── test_cli.py
 └── .github/workflows/
     └── test.yml
@@ -81,10 +110,11 @@ python -m src.cli.app --help
 ## Architecture Notes
 - `src/cli/` handles command routing and user interaction.
 - `src/core/` contains reusable API client logic with timeout, retry, and normalized error behavior.
+- `src/core/market_service.py` integrates provider endpoints and normalizes stock/crypto quote/history payloads.
 - `src/utils/` provides shared config/env parsing and output formatting helpers.
 - Tests use mocked HTTP transports; no live external API calls are made in the automated suite.
 
 ## Known Limitations & Future Ideas
-- Market provider integrations are not implemented yet (planned in upcoming phases).
-- Rich output tables and styled status messages are planned for a later UI phase.
-- Quote/history commands for stocks and crypto are scheduled for Phase 3.
+- Output is intentionally plain text in this phase; Rich table/panel polish is planned for Phase 4.
+- Crypto symbol resolution uses a small fast-path map plus CoinGecko search fallback; ambiguous symbols may need explicit provider IDs in future improvements.
+- Provider payload shapes may change over time; additional schema hardening and fallback paths can be added in a future pass.
