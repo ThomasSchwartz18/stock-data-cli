@@ -27,6 +27,16 @@ This project is being built in phased milestones with strong emphasis on testabi
    pip install -r requirements.txt
    ```
 
+## Configuration
+The app reads runtime configuration from environment variables (and supports local `.env` files via `python-dotenv`).
+
+Common variables:
+- `REQUEST_TIMEOUT_SECONDS` (default: `10`)
+- `MAX_RETRIES` (default: `3`)
+- `API_USER_AGENT` (default: `stock-stat-tracker/0.1`)
+- `STOCK_API_KEY` (optional, used in provider phases)
+- `CRYPTO_API_KEY` (optional, used in provider phases)
+
 ## Usage & Examples
 Run the baseline command:
 
@@ -53,13 +63,26 @@ python -m src.cli.app --help
 ├── .agent_docs/
 ├── docs/plans/
 ├── src/
-│   └── cli/
-│       └── app.py
+│   ├── cli/
+│   │   └── app.py
+│   ├── core/
+│   │   └── api_client.py
+│   └── utils/
+│       ├── config.py
+│       └── formatting.py
 ├── tests/
+│   ├── core/
+│   ├── utils/
 │   └── test_cli.py
 └── .github/workflows/
     └── test.yml
 ```
+
+## Architecture Notes
+- `src/cli/` handles command routing and user interaction.
+- `src/core/` contains reusable API client logic with timeout, retry, and normalized error behavior.
+- `src/utils/` provides shared config/env parsing and output formatting helpers.
+- Tests use mocked HTTP transports; no live external API calls are made in the automated suite.
 
 ## Known Limitations & Future Ideas
 - Market provider integrations are not implemented yet (planned in upcoming phases).
