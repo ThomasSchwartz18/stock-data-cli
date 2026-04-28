@@ -10,6 +10,9 @@ This project is being built in phased milestones with strong emphasis on testabi
 ## Screenshots / GIFs
 - Placeholder: `docs/assets/cli-ping-output.png`
 - Placeholder: `docs/assets/cli-help-output.png`
+- Placeholder: `docs/assets/cli-quote-rich-table.png`
+- Placeholder: `docs/assets/cli-history-rich-table.png`
+- Placeholder: `docs/assets/cli-error-panel.png`
 
 ## Installation
 1. Clone the repository:
@@ -77,6 +80,12 @@ Fetch recent price history:
 python -m src.cli.app history ETH --market crypto --range 7d --interval 1d --limit 5
 ```
 
+Show traceback output for troubleshooting:
+
+```bash
+python -m src.cli.app quote AAPL --market stock --debug
+```
+
 ## Project Structure
 ```text
 .
@@ -109,12 +118,13 @@ python -m src.cli.app history ETH --market crypto --range 7d --interval 1d --lim
 
 ## Architecture Notes
 - `src/cli/` handles command routing and user interaction.
+- `src/cli/rendering.py` contains Rich table/panel rendering helpers.
 - `src/core/` contains reusable API client logic with timeout, retry, and normalized error behavior.
 - `src/core/market_service.py` integrates provider endpoints and normalizes stock/crypto quote/history payloads.
 - `src/utils/` provides shared config/env parsing and output formatting helpers.
 - Tests use mocked HTTP transports; no live external API calls are made in the automated suite.
 
 ## Known Limitations & Future Ideas
-- Output is intentionally plain text in this phase; Rich table/panel polish is planned for Phase 4.
 - Crypto symbol resolution uses a small fast-path map plus CoinGecko search fallback; ambiguous symbols may need explicit provider IDs in future improvements.
 - Provider payload shapes may change over time; additional schema hardening and fallback paths can be added in a future pass.
+- A richer interactive TUI dashboard is still planned as a future enhancement.

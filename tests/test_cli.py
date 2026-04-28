@@ -99,9 +99,11 @@ def test_quote_command_success(monkeypatch: pytest.MonkeyPatch) -> None:
     result = runner.invoke(app, ["quote", "AAPL", "--market", "stock"])
 
     assert result.exit_code == 0
-    assert "Symbol: AAPL" in result.output
-    assert "Price: $182.55" in result.output
-    assert "24h Change: +1.10%" in result.output
+    output = _combined_output(result)
+    assert "Quote" in output
+    assert "AAPL" in output
+    assert "$182.55" in output
+    assert "+1.10%" in output
     assert fake_service.closed is True
 
 
@@ -129,9 +131,12 @@ def test_history_command_success(monkeypatch: pytest.MonkeyPatch) -> None:
     )
 
     assert result.exit_code == 0
-    assert "Market: crypto" in result.output
-    assert "- 2026-04-26: $94,000.00" in result.output
-    assert "- 2026-04-27: $95,000.00" in result.output
+    output = _combined_output(result)
+    assert "History (crypto | BTC | 1d)" in output
+    assert "2026-04-26" in output
+    assert "$94,000.00" in output
+    assert "2026-04-27" in output
+    assert "$95,000.00" in output
     assert fake_service.closed is True
 
 
@@ -145,7 +150,9 @@ def test_quote_command_invalid_symbol(monkeypatch: pytest.MonkeyPatch) -> None:
     result = runner.invoke(app, ["quote", "bad!!", "--market", "stock"])
 
     assert result.exit_code == 1
-    assert "Invalid symbol" in _combined_output(result)
+    output = _combined_output(result)
+    assert "Input Error" in output
+    assert "Invalid symbol" in output
 
 
 def test_history_command_rate_limited(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -158,4 +165,6 @@ def test_history_command_rate_limited(monkeypatch: pytest.MonkeyPatch) -> None:
     result = runner.invoke(app, ["history", "AAPL", "--market", "stock"])
 
     assert result.exit_code == 1
-    assert "Retry after 30 seconds" in _combined_output(result)
+    output = _combined_output(result)
+    assert "Rate Limit" in output
+    assert "Retry after 30 seconds" in output
