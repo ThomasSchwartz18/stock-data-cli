@@ -3,6 +3,13 @@
 ## Objective
 Establish the project baseline so every later phase can ship quickly and safely. This phase creates the runtime dependencies, CLI skeleton, initial tests, and CI workflow required for reliable iteration. Completing this phase early de-risks grading criteria around repository quality, tests, and automation.
 
+## Phase Status
+- [x] Task 1 complete: Dependency and environment baseline
+- [x] Task 2 complete: CLI skeleton and package layout
+- [x] Task 3 complete: Initial test suite and test command
+- [x] Task 4 complete: CI/CD workflow created
+- [x] Task 5 complete: README baseline initialized
+
 ## Required Inputs (Read First)
 - `AGENTS.md`
 - `docs/plans/ROADMAP.md`
@@ -54,10 +61,10 @@ Out of scope:
 
 ## AI Agent Audit Checklist
 Before marking this phase as complete, an AI agent must verify the following:
-- [ ] Code changes align with `.agent_docs/` guidelines.
-- [ ] Tests have been written/updated and pass locally.
-- [ ] The `README.md` has been updated to reflect any new features, flags, or usage commands.
-- [ ] No secrets or sensitive information have been hardcoded.
+- [x] Code changes align with `.agent_docs/` guidelines.
+- [x] Tests have been written/updated and pass locally.
+- [x] The `README.md` has been updated to reflect any new features, flags, or usage commands.
+- [x] No secrets or sensitive information have been hardcoded.
 - [ ] The commit history reflects logical, incremental steps.
 - [ ] The CI/CD pipeline on the `main` branch is passing.
 
