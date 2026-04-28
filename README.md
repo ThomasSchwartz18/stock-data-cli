@@ -8,6 +8,7 @@ Stock & Crypto CLI Tracker is a Python command line application for checking mar
 This project is being built in phased milestones with strong emphasis on testability, modular architecture, and CI/CD automation. Current functionality includes a baseline CLI command used to validate app wiring and delivery pipeline setup.
 
 ## Screenshots / GIFs
+Capture these after running the commands below and store them in `docs/assets/`:
 - Placeholder: `docs/assets/cli-ping-output.png`
 - Placeholder: `docs/assets/cli-help-output.png`
 - Placeholder: `docs/assets/cli-quote-rich-table.png`
@@ -68,6 +69,9 @@ Fetch a stock quote:
 python -m src.cli.app quote AAPL --market stock
 ```
 
+Example output (table shape):
+- Quote table with columns: `Market`, `Symbol`, `Name`, `Price`, `24h Change`.
+
 Fetch crypto quote:
 
 ```bash
@@ -79,6 +83,9 @@ Fetch recent price history:
 ```bash
 python -m src.cli.app history ETH --market crypto --range 7d --interval 1d --limit 5
 ```
+
+Example output (table shape):
+- History table with columns: `Date`, `Price`.
 
 Show traceback output for troubleshooting:
 
