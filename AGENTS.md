@@ -18,6 +18,8 @@ Technical defaults:
 ## 2. Directory Decision Tree Routing
 Do not guess implementation details. Before coding, route to the appropriate guidance in `.agent_docs/`:
 
+- If planning, reviewing progress, or looking for the current task:
+  - Read the active phase document in `docs/plans/`
 - If adding or modifying CLI commands, routing, argument parsing, or command wiring:
   - Read `.agent_docs/architecture.md`
 - If altering terminal output, formatting data, adding Rich components, or modifying TUI layouts:
@@ -28,6 +30,10 @@ Do not guess implementation details. Before coding, route to the appropriate gui
   - Read `.agent_docs/security.md`
 - For coding style, typing, test expectations, and quality gates:
   - Read `.agent_docs/python_standards.md`
+- For updating the README, writing documentation, or adding screenshots:
+  - Read `.agent_docs/documentation_guidelines.md`
+- For running the test suite, fixing CI/CD pipeline issues, or managing Git commits:
+  - Read `.agent_docs/testing_and_changes.md`
 - To review the final project grading rubric and success criteria:
   - Read `.agent_docs/course_requirements.md`
 
@@ -73,6 +79,7 @@ A task is complete only when all apply:
 - Code follows routing and standards docs.
 - Secrets are handled safely and not hardcoded.
 - Errors are handled with actionable user-facing messages.
+- User-facing features or CLI commands are documented in `README.md` with usage examples.
 - Tests are added/updated and pass locally (or failures are explicitly reported with cause).
 - Changes are modular and maintainable.
 
