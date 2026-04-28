@@ -5,6 +5,7 @@ from __future__ import annotations
 import typer
 
 from src.cli.commands.market import history_command, quote_command
+from src.cli.wizard import interactive_command
 
 app = typer.Typer(help="Stock & Crypto CLI Tracker")
 
@@ -23,6 +24,7 @@ def ping() -> None:
 
 app.command(name="quote")(quote_command)
 app.command(name="history")(history_command)
+app.command(name="interactive")(interactive_command)
 
 
 def run() -> None:

@@ -14,6 +14,7 @@ Capture these after running the commands below and store them in `docs/assets/`:
 - Placeholder: `docs/assets/cli-quote-rich-table.png`
 - Placeholder: `docs/assets/cli-history-rich-table.png`
 - Placeholder: `docs/assets/cli-error-panel.png`
+- Placeholder: `docs/assets/cli-interactive-wizard.png`
 
 ## Installation
 1. Clone the repository:
@@ -63,6 +64,12 @@ Show command help:
 python -m src.cli.app --help
 ```
 
+Launch interactive wizard mode (arrow-key menu):
+
+```bash
+python -m src.cli.app interactive
+```
+
 Fetch a stock quote:
 
 ```bash
@@ -102,6 +109,7 @@ python -m src.cli.app quote AAPL --market stock --debug
 ├── src/
 │   ├── cli/
 │   │   ├── app.py
+│   │   ├── wizard.py
 │   │   └── commands/
 │   │       └── market.py
 │   ├── core/
@@ -118,7 +126,8 @@ python -m src.cli.app quote AAPL --market stock --debug
 │   ├── utils/
 │   │   ├── test_config.py
 │   │   └── test_formatting.py
-│   └── test_cli.py
+│   ├── test_cli.py
+│   └── test_wizard.py
 └── .github/workflows/
     └── test.yml
 ```
@@ -126,6 +135,7 @@ python -m src.cli.app quote AAPL --market stock --debug
 ## Architecture Notes
 - `src/cli/` handles command routing and user interaction.
 - `src/cli/rendering.py` contains Rich table/panel rendering helpers.
+- `src/cli/wizard.py` adds guided arrow-key prompts for quote/history flows.
 - `src/core/` contains reusable API client logic with timeout, retry, and normalized error behavior.
 - `src/core/market_service.py` integrates provider endpoints and normalizes stock/crypto quote/history payloads.
 - `src/utils/` provides shared config/env parsing and output formatting helpers.
@@ -135,3 +145,4 @@ python -m src.cli.app quote AAPL --market stock --debug
 - Crypto symbol resolution uses a small fast-path map plus CoinGecko search fallback; ambiguous symbols may need explicit provider IDs in future improvements.
 - Provider payload shapes may change over time; additional schema hardening and fallback paths can be added in a future pass.
 - A richer interactive TUI dashboard is still planned as a future enhancement.
+- Interactive wizard depends on local terminal prompt support for `questionary`; non-interactive shells should use standard CLI commands.
