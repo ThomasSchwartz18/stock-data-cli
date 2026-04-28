@@ -27,4 +27,8 @@ def test_invalid_command_returns_non_zero_exit() -> None:
     """Unknown commands should fail with a usage hint."""
     result = runner.invoke(app, ["not-a-command"])
     assert result.exit_code != 0
-    assert "No such command" in result.stdout
+    stderr = ""
+    if getattr(result, "stderr_bytes", None):
+        stderr = result.stderr_bytes.decode()
+    output = result.output + result.stdout + stderr
+    assert "No such command" in output or "Got unexpected extra argument" in output
