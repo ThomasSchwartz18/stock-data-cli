@@ -21,11 +21,11 @@ def ping() -> None:
     """Basic health command used to verify CLI wiring."""
     typer.echo("pong")
 
-
 app.command(name="quote")(quote_command)
 app.command(name="history")(history_command)
-app.command(name="interactive")(interactive_command)
 
+# Register the interactive wizard command
+app.command(name="interactive")(interactive_command)
 
 def run() -> None:
     """Run the Typer application."""

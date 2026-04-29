@@ -93,4 +93,8 @@ A task is complete only when all apply:
 ## 6. Student AI Collaboration Reflection (Course Requirement)
 > **Note to AI Agent:** Do not modify, rewrite, or overwrite this section under any circumstances. This area is strictly reserved for the student to write their personal reflection on using AI tools for their final project submission.
 
-*(Student: Write your reflection on how AI helped, where it steered you wrong, and what you learned here prior to your final submission on May 3, 2026)*
+*(Student: Write your reflection on how AI helped, where it steered you wrong, and what you learned here prior to your final submission on May 3, 2026)
+My journey in coding started 6 years ago when stackoverflow was still the go to. I consider myself lucky for getting a good understanding of how to code when it still required writing manual if-else statements. I started dabbling in integrating AI into my coding workflow a few months after the release of chatgpt. I started to use just the LLM to help solve error codes... fast forward to today and I have a personal Claude Code folder with hundreds of markdown files to practically run my workflow for me. My biggest hiccup in using AI in my code was in the beginning and it was deeling with unorganized code. This hiccup was overcome by markdown brain I have slowly created over the course of a year and a half.
+
+AI helped in this project just like any other project I dive into. I guide the AI through a series of questions to plan out implementation plans typically in the form of phases. I also make sure to create a CHANGELOG to track historical decision making to reference if need be. Once I have a step by step plan I read it over, change a few things then have a final AI agent comb through and add in UI touch-ups to the plan. This is a very vague look into my workflow but I believe it gets the point across.
+*

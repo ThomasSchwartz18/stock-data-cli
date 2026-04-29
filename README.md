@@ -11,10 +11,10 @@ This project is being built in phased milestones with strong emphasis on testabi
 Capture these after running the commands below and store them in `docs/assets/`:
 - Placeholder: `docs/assets/cli-ping-output.png`
 - Placeholder: `docs/assets/cli-help-output.png`
-- Placeholder: `docs/assets/cli-quote-rich-table.png`
-- Placeholder: `docs/assets/cli-history-rich-table.png`
 - Placeholder: `docs/assets/cli-error-panel.png`
 - Placeholder: `docs/assets/cli-interactive-wizard.png`
+- Placeholder: `docs/assets/cli-quote-dashboard-card.png`
+- Placeholder: `docs/assets/cli-history-sparkline.png`
 
 ## Installation
 1. Clone the repository:
@@ -24,7 +24,7 @@ Capture these after running the commands below and store them in `docs/assets/`:
    ```
 2. Create and activate a virtual environment:
    ```bash
-   python -m venv .venv
+   python3 -m venv .venv
    source .venv/bin/activate
    ```
 3. Install dependencies:
@@ -49,7 +49,7 @@ If your environment uses API-key-backed provider variants, add keys through envi
 Run the baseline health command:
 
 ```bash
-python -m src.cli.app ping
+python3 -m src.cli.app ping
 ```
 
 Expected output:
@@ -61,43 +61,43 @@ pong
 Show command help:
 
 ```bash
-python -m src.cli.app --help
+python3 -m src.cli.app --help
 ```
 
 Launch interactive wizard mode (arrow-key menu):
 
 ```bash
-python -m src.cli.app interactive
+python3 -m src.cli.app interactive
 ```
 
 Fetch a stock quote:
 
 ```bash
-python -m src.cli.app quote AAPL --market stock
+python3 -m src.cli.app quote AAPL --market stock
 ```
 
 Example output (table shape):
-- Quote table with columns: `Market`, `Symbol`, `Name`, `Price`, `24h Change`.
+- Dashboard card with stylized price panel, trend arrows (`▲` / `▼`), and 24h percentage change.
 
 Fetch crypto quote:
 
 ```bash
-python -m src.cli.app quote BTC --market crypto
+python3 -m src.cli.app quote BTC --market crypto
 ```
 
 Fetch recent price history:
 
 ```bash
-python -m src.cli.app history ETH --market crypto --range 7d --interval 1d --limit 5
+python3 -m src.cli.app history ETH --market crypto --range 7d --interval 1d --limit 5
 ```
 
 Example output (table shape):
-- History table with columns: `Date`, `Price`.
+- History panel with a larger right-side sparkline trendline and columns: `Date`, `Price`, `Trend`.
 
 Show traceback output for troubleshooting:
 
 ```bash
-python -m src.cli.app quote AAPL --market stock --debug
+python3 -m src.cli.app quote AAPL --market stock --debug
 ```
 
 ## Project Structure
@@ -134,7 +134,7 @@ python -m src.cli.app quote AAPL --market stock --debug
 
 ## Architecture Notes
 - `src/cli/` handles command routing and user interaction.
-- `src/cli/rendering.py` contains Rich table/panel rendering helpers.
+- `src/cli/rendering.py` renders dashboard quote cards, history sparklines, and wizard banner components.
 - `src/cli/wizard.py` adds guided arrow-key prompts for quote/history flows.
 - `src/core/` contains reusable API client logic with timeout, retry, and normalized error behavior.
 - `src/core/market_service.py` integrates provider endpoints and normalizes stock/crypto quote/history payloads.

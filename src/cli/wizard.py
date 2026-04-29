@@ -9,7 +9,12 @@ import typer
 from rich.panel import Panel
 
 from src.cli.commands.market import get_console, get_market_service
-from src.cli.rendering import build_history_table, build_quote_table, render_error_panel
+from src.cli.rendering import (
+    build_history_table,
+    build_quote_card,
+    build_wizard_banner,
+    render_error_panel,
+)
 from src.core.api_client import (
     ApiHTTPError,
     ApiRateLimitError,
@@ -135,6 +140,8 @@ def interactive_command(
         )
         raise typer.Exit(1)
 
+    console.print(build_wizard_banner())
+
     service = get_market_service()
     try:
         action = _required_answer(ask_select("Choose an action:", ACTION_CHOICES))
@@ -144,7 +151,7 @@ def interactive_command(
         if action == "Quote":
             with console.status("[cyan]Fetching quote data...[/cyan]"):
                 quote = service.get_quote(symbol=symbol, market=market)
-            console.print(build_quote_table(quote))
+            console.print(build_quote_card(quote))
             return
 
         range_value, interval, limit = _resolve_history_options()

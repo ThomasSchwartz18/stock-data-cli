@@ -70,7 +70,9 @@ def test_interactive_quote_default_flow(monkeypatch: pytest.MonkeyPatch) -> None
 
     assert result.exit_code == 0
     output = _combined_output(result)
-    assert "Quote" in output
+    assert "Welcome" in output
+    assert "Interactive Wizard" in output
+    assert "Dashboard" in output
     assert "AAPL" in output
     assert "$190.12" in output
     assert fake_service.quote_called_with == ("AAPL", "stock")
@@ -114,8 +116,11 @@ def test_interactive_history_other_prompts(monkeypatch: pytest.MonkeyPatch) -> N
 
     assert result.exit_code == 0
     output = _combined_output(result)
+    assert "Welcome" in output
+    assert "Interactive Wizard" in output
     assert "History (crypto | HYPE" in output
-    assert "| 1d)" in output
+    assert "1d)" in output
+    assert "Trendline" in output
     assert "$1.22" in output
     assert "$1.33" in output
     assert fake_service.history_called_with == ("HYPE", "crypto", "14d", "1d")
@@ -142,6 +147,7 @@ def test_interactive_ctrl_c_safe_exit(monkeypatch: pytest.MonkeyPatch) -> None:
 
     assert result.exit_code == 0
     output = _combined_output(result)
+    assert "Welcome" in output
     assert "Cancelled" in output
     assert "Interactive wizard cancelled by user" in output
     assert fake_service.closed is True

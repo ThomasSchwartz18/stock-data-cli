@@ -28,18 +28,20 @@ def test_get_stock_quote_success() -> None:
     """Stock quote data should parse from Yahoo quote payload."""
 
     def handler(request: httpx.Request) -> httpx.Response:
-        assert request.url.path == "/v7/finance/quote"
+        assert request.url.path == "/v8/finance/chart/AAPL"
         return httpx.Response(
             200,
             json={
-                "quoteResponse": {
+                "chart": {
                     "result": [
                         {
-                            "symbol": "AAPL",
-                            "longName": "Apple Inc.",
-                            "regularMarketPrice": 189.32,
-                            "regularMarketChangePercent": 1.23,
-                            "currency": "USD",
+                            "meta": {
+                                "symbol": "AAPL",
+                                "longName": "Apple Inc.",
+                                "regularMarketPrice": 189.32,
+                                "regularMarketChangePercent": 1.23,
+                                "currency": "USD",
+                            }
                         }
                     ]
                 }
@@ -59,11 +61,42 @@ def test_get_stock_quote_symbol_not_found() -> None:
     """Missing stock results should raise SymbolNotFoundError."""
 
     def handler(_request: httpx.Request) -> httpx.Response:
-        return httpx.Response(200, json={"quoteResponse": {"result": []}})
+        return httpx.Response(200, json={"chart": {"result": []}})
 
     service = _make_service(httpx.MockTransport(handler))
     with pytest.raises(SymbolNotFoundError):
         service.get_quote("MISSING", "stock")
+
+
+def test_get_stock_quote_computes_change_percent_fallback() -> None:
+    """Stock quote should compute change percent when direct field is missing."""
+
+    def handler(_request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            json={
+                "chart": {
+                    "result": [
+                        {
+                            "meta": {
+                                "symbol": "NVDA",
+                                "longName": "NVIDIA Corporation",
+                                "regularMarketPrice": 213.17,
+                                "regularMarketChange": 5.17,
+                                "regularMarketPreviousClose": 208.0,
+                                "currency": "USD",
+                            }
+                        }
+                    ]
+                }
+            },
+        )
+
+    service = _make_service(httpx.MockTransport(handler))
+    quote = service.get_quote("NVDA", "stock")
+
+    assert quote.change_percent is not None
+    assert quote.change_percent == pytest.approx((5.17 / 208.0) * 100, rel=1e-6)
 
 
 def test_get_crypto_quote_success_from_symbol_map() -> None:

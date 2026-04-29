@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
-from src.utils.formatting import format_currency, format_percentage
+from src.utils.formatting import (
+    format_currency,
+    format_percentage,
+    trend_arrow,
+    trend_word,
+)
 
 
 def test_format_currency_with_standard_value() -> None:
@@ -28,3 +33,19 @@ def test_format_percentage_with_negative_value() -> None:
 def test_format_percentage_with_none_value() -> None:
     """Percentage helper should support null fallback rendering."""
     assert format_percentage(None) == "N/A"
+
+
+def test_format_percentage_with_arrow() -> None:
+    """Percentage helper should optionally include trend arrows."""
+    assert format_percentage(3.2, with_arrow=True) == "▲ +3.20%"
+    assert format_percentage(-3.2, with_arrow=True) == "▼ -3.20%"
+
+
+def test_trend_helpers_return_expected_values() -> None:
+    """Trend helpers should map values to arrows and labels."""
+    assert trend_arrow(1.0) == "▲"
+    assert trend_arrow(-1.0) == "▼"
+    assert trend_arrow(0.0) == "■"
+    assert trend_word(1.0) == "Bullish"
+    assert trend_word(-1.0) == "Bearish"
+    assert trend_word(0.0) == "Flat"

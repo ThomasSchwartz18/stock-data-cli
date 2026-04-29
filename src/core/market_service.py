@@ -101,31 +101,30 @@ class MarketService:
     def _get_stock_quote(self, symbol: str) -> QuoteData:
         payload = self.api_client.request(
             method="GET",
-            endpoint=f"{YAHOO_BASE_URL}/v7/finance/quote",
-            params={"symbols": symbol},
+            endpoint=f"{YAHOO_BASE_URL}/v8/finance/chart/{symbol}",
+            params={"range": "1d", "interval": "1d"},
         )
 
-        result_items = (
-            payload.get("quoteResponse", {}).get("result", [])
-            if isinstance(payload, dict)
-            else []
-        )
+        chart_payload = payload.get("chart", {}) if isinstance(payload, dict) else {}
+        result_items = chart_payload.get("result", []) if isinstance(chart_payload, dict) else []
         if not result_items:
             raise SymbolNotFoundError(f"Stock symbol '{symbol}' was not found.")
 
         item = result_items[0]
-        price = item.get("regularMarketPrice")
+        meta = item.get("meta", {})
+        price = meta.get("regularMarketPrice")
         if price is None:
             raise SymbolNotFoundError(f"No quote data found for stock symbol '{symbol}'.")
 
-        name = item.get("longName") or item.get("shortName") or symbol
+        name = meta.get("longName") or meta.get("shortName") or symbol
+        price_value = float(price)
         return QuoteData(
             market="stock",
-            symbol=item.get("symbol", symbol),
+            symbol=meta.get("symbol", symbol),
             name=name,
-            price=float(price),
-            currency=item.get("currency", "USD"),
-            change_percent=self._as_float(item.get("regularMarketChangePercent")),
+            price=price_value,
+            currency=meta.get("currency", "USD"),
+            change_percent=self._stock_change_percent(meta=meta, price=price_value),
         )
 
     def _get_stock_history(self, symbol: str, range_value: str, interval: str) -> HistoryData:
@@ -194,13 +193,14 @@ class MarketService:
     def _get_crypto_history(self, symbol: str, range_value: str, interval: str) -> HistoryData:
         coin_id = self._resolve_crypto_id(symbol)
         days = self._range_days(range_value)
+        cg_interval = "daily" if interval == "1d" else "hourly" if interval == "1h" else interval
         payload = self.api_client.request(
             method="GET",
             endpoint=f"{COINGECKO_BASE_URL}/coins/{coin_id}/market_chart",
             params={
                 "vs_currency": "usd",
                 "days": str(days),
-                "interval": "daily" if interval == "1d" else interval,
+                "interval": cg_interval,
             },
         )
 
@@ -272,3 +272,23 @@ class MarketService:
         except (TypeError, ValueError):
             raise MarketServiceError("Unexpected provider payload value type.") from None
 
+    def _stock_change_percent(self, meta: dict[str, Any], price: float) -> float | None:
+        """Resolve stock percent change from direct field or computed fallbacks."""
+        direct_percent = self._as_float(meta.get("regularMarketChangePercent"))
+        if direct_percent is not None:
+            return direct_percent
+
+        change_value = self._as_float(meta.get("regularMarketChange"))
+        previous_close = self._as_float(
+            meta.get("regularMarketPreviousClose")
+            or meta.get("previousClose")
+            or meta.get("chartPreviousClose")
+        )
+
+        if previous_close and change_value is not None:
+            return (change_value / previous_close) * 100
+
+        if previous_close:
+            return ((price - previous_close) / previous_close) * 100
+
+        return None

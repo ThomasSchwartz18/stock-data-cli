@@ -7,7 +7,7 @@ import traceback
 import typer
 from rich.console import Console
 
-from src.cli.rendering import build_history_table, build_quote_table, render_error_panel
+from src.cli.rendering import build_history_table, build_quote_card, render_error_panel
 from src.core.api_client import (
     ApiHTTPError,
     ApiRateLimitError,
@@ -137,7 +137,7 @@ def quote_command(
     finally:
         service.close()
 
-    console.print(build_quote_table(quote))
+    console.print(build_quote_card(quote))
 
 
 def history_command(
