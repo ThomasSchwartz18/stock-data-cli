@@ -1,6 +1,6 @@
 # Stock & Crypto CLI Tracker
 
-![Tests](https://github.com/<your-username>/<your-repo>/actions/workflows/test.yml/badge.svg)
+![Tests](https://github.com/ThomasSchwartz18/stock-data-cli/actions/workflows/test.yml/badge.svg)
 
 ## What It Does
 Stock & Crypto CLI Tracker is a Python command line application for checking market data from your terminal. The goal is to provide a clean and reliable workflow for quote lookups, historical snapshots, and market context without leaving the command line.
@@ -9,22 +9,25 @@ This project is being built in phased milestones with strong emphasis on testabi
 
 ## Screenshots / GIFs
 Capture these after running the commands below and store them in `docs/assets/`:
-- Placeholder: `docs/assets/cli-ping-output.png`
-- Placeholder: `docs/assets/cli-help-output.png`
-- Placeholder: `docs/assets/cli-error-panel.png`
-- Placeholder: `docs/assets/cli-interactive-wizard.png`
-- Placeholder: `docs/assets/cli-quote-dashboard-card.png`
-- Placeholder: `docs/assets/cli-history-sparkline.png`
+
+![Ping Output](docs/assets/cli-ping-output.png)
+![Help Output](docs/assets/cli-help-output.png)
+![Quote Rich Table](docs/assets/cli-quote-rich-table.png)
+![History Rich Table](docs/assets/cli-history-rich-table.png)
+![Error Panel](docs/assets/cli-error-panel.png)
+![Interactive Wizard](docs/assets/cli-interactive-wizard.png)
+![Quote Dashboard Card](docs/assets/cli-quote-dashboard-card.png)
+![History Sparkline](docs/assets/cli-history-sparkline.png)
 
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/<your-repo>.git
-   cd <your-repo>
+   git clone https://github.com/ThomasSchwartz18/stock-data-cli.git
+   cd stock-data-cli
    ```
 2. Create and activate a virtual environment:
    ```bash
-   python3 -m venv .venv
+   python -m venv .venv
    source .venv/bin/activate
    ```
 3. Install dependencies:
@@ -49,7 +52,7 @@ If your environment uses API-key-backed provider variants, add keys through envi
 Run the baseline health command:
 
 ```bash
-python3 -m src.cli.app ping
+python -m src.cli.app ping
 ```
 
 Expected output:
@@ -61,43 +64,43 @@ pong
 Show command help:
 
 ```bash
-python3 -m src.cli.app --help
+python -m src.cli.app --help
 ```
 
 Launch interactive wizard mode (arrow-key menu):
 
 ```bash
-python3 -m src.cli.app interactive
+python -m src.cli.app interactive
 ```
 
 Fetch a stock quote:
 
 ```bash
-python3 -m src.cli.app quote AAPL --market stock
+python -m src.cli.app quote AAPL --market stock
 ```
 
 Example output (table shape):
-- Dashboard card with stylized price panel, trend arrows (`▲` / `▼`), and 24h percentage change.
+- Dashboard card with market emoji, stylized price panel, and trend arrows (`▲` / `▼`).
 
 Fetch crypto quote:
 
 ```bash
-python3 -m src.cli.app quote BTC --market crypto
+python -m src.cli.app quote BTC --market crypto
 ```
 
 Fetch recent price history:
 
 ```bash
-python3 -m src.cli.app history ETH --market crypto --range 7d --interval 1d --limit 5
+python -m src.cli.app history ETH --market crypto --range 7d --interval 1d --limit 5
 ```
 
 Example output (table shape):
-- History panel with a larger right-side sparkline trendline and columns: `Date`, `Price`, `Trend`.
+- History panel with sparkline trendline and columns: `Date`, `Price`, `Trend`.
 
 Show traceback output for troubleshooting:
 
 ```bash
-python3 -m src.cli.app quote AAPL --market stock --debug
+python -m src.cli.app quote AAPL --market stock --debug
 ```
 
 ## Project Structure
@@ -134,7 +137,8 @@ python3 -m src.cli.app quote AAPL --market stock --debug
 
 ## Architecture Notes
 - `src/cli/` handles command routing and user interaction.
-- `src/cli/rendering.py` renders dashboard quote cards, history sparklines, and wizard banner components.
+- `src/cli/rendering.py` contains Rich table/panel rendering helpers.
+- `src/cli/rendering.py` now renders dashboard quote cards, history sparklines, and wizard banner components.
 - `src/cli/wizard.py` adds guided arrow-key prompts for quote/history flows.
 - `src/core/` contains reusable API client logic with timeout, retry, and normalized error behavior.
 - `src/core/market_service.py` integrates provider endpoints and normalizes stock/crypto quote/history payloads.
