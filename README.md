@@ -1,6 +1,6 @@
 # Stock & Crypto CLI Tracker
 
-![Tests](https://github.com/ThomasSchwartz18/stock-data-cli/actions/workflows/test.yml/badge.svg)
+![Tests](https://github.com/<your-username>/<your-repo>/actions/workflows/test.yml/badge.svg)
 
 ## What It Does
 Stock & Crypto CLI Tracker is a Python command line application for checking market data from your terminal. The goal is to provide a clean and reliable workflow for quote lookups, historical snapshots, and market context without leaving the command line.
@@ -8,22 +8,36 @@ Stock & Crypto CLI Tracker is a Python command line application for checking mar
 This project is being built in phased milestones with strong emphasis on testability, modular architecture, and CI/CD automation. Current functionality includes a baseline CLI command used to validate app wiring and delivery pipeline setup.
 
 ## Screenshots / GIFs
-Capture these after running the commands below and store them in `docs/assets/`:
 
-![Ping Output](docs/assets/cli-ping-output.png)
-![Help Output](docs/assets/cli-help-output.png)
-![Quote Rich Table](docs/assets/cli-quote-rich-table.png)
-![History Rich Table](docs/assets/cli-history-rich-table.png)
-![Error Panel](docs/assets/cli-error-panel.png)
-![Interactive Wizard](docs/assets/cli-interactive-wizard.png)
-![Quote Dashboard Card](docs/assets/cli-quote-dashboard-card.png)
-![History Sparkline](docs/assets/cli-history-sparkline.png)
+### Ping Output
+!Ping Output
+
+### Help Output
+!Help Output
+
+### Quote Rich Table
+!Quote Rich Table
+
+### History Rich Table
+!History Rich Table
+
+### Error Panel
+!Error Panel
+
+### Interactive Wizard
+!Interactive Wizard
+
+### Quote Dashboard Card
+!Quote Dashboard Card
+
+### History Sparkline
+!History Sparkline
 
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ThomasSchwartz18/stock-data-cli.git
-   cd stock-data-cli
+   git clone https://github.com/<your-username>/<your-repo>.git
+   cd <your-repo>
    ```
 2. Create and activate a virtual environment:
    ```bash
