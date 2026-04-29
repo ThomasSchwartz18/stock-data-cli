@@ -10,28 +10,28 @@ This project is being built in phased milestones with strong emphasis on testabi
 ## Screenshots / GIFs
 
 ### Ping Output
-!Ping Output
+![Ping Output](docs/assets/cli-ping-output.png)
 
 ### Help Output
-!Help Output
+![Help Output](docs/assets/cli-help-output.png)
 
 ### Quote Rich Table
-!Quote Rich Table
+![Quote Rich Table](docs/assets/cli-quote-rich-table.png)
 
 ### History Rich Table
-!History Rich Table
+![History Rich Table](docs/assets/cli-history-rich-table.png)
 
 ### Error Panel
-!Error Panel
+![Error Panel](docs/assets/cli-error-panel.png)
 
 ### Interactive Wizard
-!Interactive Wizard
+![Interactive Wizard](docs/assets/cli-interactive-wizard.png)
 
 ### Quote Dashboard Card
-!Quote Dashboard Card
+![Quote Dashboard Card](docs/assets/cli-quote-dashboard-card.png)
 
 ### History Sparkline
-!History Sparkline
+![History Sparkline](docs/assets/cli-history-sparkline.png)
 
 ## Installation
 1. Clone the repository:
