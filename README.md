@@ -9,17 +9,8 @@ This project is being built in phased milestones with strong emphasis on testabi
 
 ## Screenshots / GIFs
 
-### Ping Output
-![Ping Output](docs/assets/cli-ping-output.png)
-
 ### Help Output
 ![Help Output](docs/assets/cli-help-output.png)
-
-### Quote Rich Table
-![Quote Rich Table](docs/assets/cli-quote-rich-table.png)
-
-### History Rich Table
-![History Rich Table](docs/assets/cli-history-rich-table.png)
 
 ### Error Panel
 ![Error Panel](docs/assets/cli-error-panel.png)
